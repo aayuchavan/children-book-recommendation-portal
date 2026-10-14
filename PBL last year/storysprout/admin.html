@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StorySprout Admin</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <b>🌱 StorySprout Admin</b>
+  <a href="index.html">← Portal</a>
+</header>
+
+<main>
+  <div id="loginBox" class="card login">
+    <h1>Admin Login</h1>
+    <p>Demo: <b>admin</b> / <b>admin123</b></p>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+  <div id="adminApp" class="hidden">
+    <div class="admin-top">
+      <div>
+        <h1 id="pageTitle">Book Management</h1>
+        <p id="pageSubtitle">Add, edit and delete recommendations.</p>
+      </div>
+      <button class="danger" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- ADMIN NAVIGATION -->
+    <nav class="admin-tabs">
+      <button id="tabBooks" class="tab active" onclick="showAdminTab('books')">📚 Book Management</button>
+      <button id="tabERP" class="tab" onclick="showAdminTab('erp')">🏢 ERP Dashboard</button>
+    </nav>
+
+    <!-- BOOK MANAGEMENT -->
+    <section id="booksTab">
+      <div class="admin">
+        <section class="card">
+          <h2 id="formTitle">Add New Book</h2>
+          <input type="hidden" id="bookId">
+          <label>Title<input id="title"></label>
+          <label>Author<input id="author"></label>
+          <label>Age<select id="ageGroup">
+            <option>0-3</option><option>4-7</option><option>8-12</option><option>13+</option>
+          </select></label>
+          <label>Theme<select id="bookTheme">
+            <option>Adventure</option><option>STEM</option><option>Moral Values</option>
+            <option>Bedtime</option><option>Fantasy</option>
+          </select></label>
+          <label>Rating<input id="rating" type="number" min="1" max="5" step=".1" value="4.5"></label>
+          <label>Lexile<input id="lexile" type="number" value="450"></label>
+          <label>ASTMA Tier<select id="astmaTier">
+            <option>Level 1: Emergent</option><option>Level 2: Early Reader</option>
+            <option>Level 3: Fluent Chapter</option><option>Level 4: Advanced Analytical</option>
+          </select></label>
+          <label>Summary<textarea id="summary"></textarea></label>
+          <button onclick="saveBook()">Save Book</button>
+          <button class="secondary" onclick="clearForm()">Clear</button>
+        </section>
+
+        <div>
+          <section class="card">
+            <h2>Recommendation Weights</h2>
+            <label>ASTMA <span id="astmaVal"></span><input id="wAstma" type="range" min="0" max="100" value="40"></label>
+            <label>Genre <span id="genreVal"></span><input id="wGenre" type="range" min="0" max="100" value="30"></label>
+            <label>Rating <span id="ratingVal"></span><input id="wRating" type="range" min="0" max="100" value="20"></label>
+            <label>Age <span id="ageVal"></span><input id="wAge" type="range" min="0" max="100" value="10"></label>
+            <button onclick="saveWeights()">Save Weights</button>
+            <button class="danger" onclick="resetData()">Reset Seed Data</button>
+          </section>
+
+          <section class="card">
+            <h2>Books in Database</h2>
+            <div class="table"><table>
+              <thead><tr><th>Title</th><th>Age</th><th>Theme</th><th>Actions</th></tr></thead>
+              <tbody id="adminTable"></tbody>
+            </table></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ERP DASHBOARD -->
+    <section id="erpTab" class="hidden">
+      <div class="erp-hero">
+        <div>
+          <span class="erp-kicker">ENTERPRISE RESOURCE PLANNING</span>
+          <h1>Publisher ERP Control Center</h1>
+          <p>Simulated enterprise inventory, publisher, digital-rights and order operations for the StorySprout platform.</p>
+        </div>
+        <button class="workflow-btn" onclick="runERPWorkflow()">▶ Run Enterprise Workflow</button>
+      </div>
+
+      <div id="workflowBox" class="workflow hidden">
+        <div class="workflow-title">LIVE ENTERPRISE WORKFLOW</div>
+        <div class="workflow-steps">
+          <div class="wf-step" id="wf1"><b>01</b><span>Customer Request</span></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step" id="wf2"><b>02</b><span>Recommendation Engine</span></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step" id="wf3"><b>03</b><span>ERP Inventory Check</span></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step" id="wf4"><b>04</b><span>Digital Rights</span></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step" id="wf5"><b>05</b><span>Final Recommendation</span></div>
+        </div>
+        <div id="workflowStatus" class="workflow-status">Click the button to demonstrate the enterprise data flow.</div>
+      </div>
+
+      <div class="erp-kpis">
+        <div class="erp-kpi"><span>📚</span><div><small>Total SKUs</small><strong>2,840</strong><em>+8.4% this quarter</em></div></div>
+        <div class="erp-kpi"><span>📦</span><div><small>Available Stock</small><strong>1,740</strong><em>Healthy inventory</em></div></div>
+        <div class="erp-kpi"><span>🏢</span><div><small>Publishers</small><strong>18</strong><em>12 active integrations</em></div></div>
+        <div class="erp-kpi"><span>🔐</span><div><small>Rights Coverage</small><strong>96.4%</strong><em>All systems nominal</em></div></div>
+      </div>
+
+      <div class="erp-grid">
+        <section class="erp-card">
+          <div class="erp-card-head">
+            <div><span class="mini-label">SYSTEM STATUS</span><h2>Enterprise Connections</h2></div>
+            <span class="live-dot">● LIVE</span>
+          </div>
+          <div class="system-row"><span>🏢 Publisher ERP</span><b class="ok">● Connected</b></div>
+          <div class="system-row"><span>👥 CRM / Customer Data</span><b class="ok">● Connected</b></div>
+          <div class="system-row"><span>🧠 Recommendation Engine</span><b class="ok">● Active</b></div>
+          <div class="system-row"><span>🔐 Digital Rights Service</span><b class="ok">● Active</b></div>
+        </section>
+
+        <section class="erp-card">
+          <div class="erp-card-head">
+            <div><span class="mini-label">BUSINESS FLOW</span><h2>How ERP Supports StorySprout</h2></div>
+          </div>
+          <div class="flow-list">
+            <div><b>1</b><span>Book is recommended based on ASTMA and user preferences.</span></div>
+            <div><b>2</b><span>ERP checks publisher stock and SKU availability.</span></div>
+            <div><b>3</b><span>Digital-rights status is validated.</span></div>
+            <div><b>4</b><span>Availability is returned to the portal.</span></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="erp-card inventory-card">
+        <div class="erp-card-head">
+          <div><span class="mini-label">PUBLISHER INVENTORY</span><h2>ERP Inventory Operations</h2></div>
+          <select id="erpFilter" onchange="renderERP()">
+            <option value="all">All Status</option>
+            <option value="Active Sync">Active Sync</option>
+            <option value="Low Stock">Low Stock</option>
+            <option value="Review">Review Required</option>
+          </select>
+        </div>
+        <div class="table"><table>
+          <thead><tr><th>Publisher</th><th>SKU</th><th>Book</th><th>Stock</th><th>Digital Rights</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="erpTable"></tbody>
+        </table></div>
+      </section>
+
+      <section class="erp-card">
+        <div class="erp-card-head"><div><span class="mini-label">ERP ACTIVITY</span><h2>Recent Enterprise Events</h2></div></div>
+        <div id="erpEvents" class="events"></div>
+      </section>
+
+      <p class="prototype-note">ℹ️ <b>Presentation prototype:</b> ERP, CRM and rights connections shown here are simulated enterprise integrations implemented with HTML, CSS and JavaScript.</p>
+    </section>
+  </div>
+</main>
+
+<script src="assets/data.js"></script>
+<script src="assets/admin.js"></script>
+</body>
+</html>

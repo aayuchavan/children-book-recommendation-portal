@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>StorySprout</title><link rel="stylesheet" href="assets/style.css"></head><body>
+<header><b>🌱 StorySprout</b><a href="admin.html">Admin Panel</a></header><main>
+<section class="hero"><span>ASTMA Recommendation Engine</span><h1>Smart Book Matchmaker for Growing Minds</h1><p>Personalized children's book recommendations.</p><button onclick="document.getElementById('catalog').scrollIntoView()">Browse Books</button></section>
+<section class="filters"><input id="search" placeholder="Search title or author"><select id="age"><option value="all">All Ages</option><option>0-3</option><option>4-7</option><option>8-12</option><option>13+</option></select><select id="theme"><option value="all">All Themes</option><option>Adventure</option><option>STEM</option><option>Moral Values</option><option>Bedtime</option><option>Fantasy</option></select><select id="sort"><option value="score">Best Match</option><option value="rating">Highest Rated</option><option value="lexile">Lexile</option><option value="title">Title A-Z</option></select></section>
+section id="catalog"><div class="head"><h2>📚 Book Catalog</h2><span id="count"></span></div><div id="bookGrid" class="grid"></div></section>
+<section class="card"><div class="head"><h2>🔖 My Reading List</h2><span id="savedCount"></span></div><div id="savedBooks"></div></section></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script></body></html>
